@@ -1,32 +1,15 @@
-import { useState } from "react";
-import Filter from "./components/filter/Filter";
-import Sort from "./components/sort/Sort";
+import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import IssueList from "./pages/issueList/IssueList";
+import NotFound from "./pages/not-found/NotFound";
 
 function App() {
-  const [filter, setFilter] = useState("all");
-  const [sort, setSort] = useState("created");
-
   return (
-    <>
-      <Filter
-        selected={filter}
-        onApply={setFilter}
-        options={[
-          { text: "전체", value: "all", overrideText: "이슈 상태" },
-          { text: "open", value: "open" },
-          { text: "closed", value: "closed" },
-        ]}
-      />
-      <Sort
-        selected={sort}
-        onApply={setSort}
-        options={[
-          { text: "작성일 순", value: "created" },
-          { text: "수정일 순", value: "updated" },
-          { text: "코멘트 순", value: "comments" },
-        ]}
-      />
-    </>
+    <Routes>
+      <Route path="/home" element={<IssueList />} />
+      <Route path="/" element={<Navigate replace to="/home" />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
