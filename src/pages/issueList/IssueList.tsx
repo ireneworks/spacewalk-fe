@@ -15,7 +15,7 @@ export default function IssueList() {
   const [sort, setSort] = useState("");
   const [page, setPage] = useState(0);
   const [totalPage, setTotalPages] = useState(1);
-  const [issues, setIssues] = useState<any>([]);
+  const [issues, setIssues] = useState<Issue[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
