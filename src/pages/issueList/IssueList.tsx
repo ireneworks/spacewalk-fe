@@ -12,12 +12,18 @@ export default function IssueList() {
   const [filter, setFilter] = useState("all");
   const [sort, setSort] = useState("created");
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPages] = useState(1);
   const [issues, setIssues] = useState<any>([]);
 
   useEffect(() => {
     (async function () {
-      const response = await getIssue();
-      setIssues(response);
+      const response = await getIssue({});
+      if (response.isSuccess) {
+        setIssues(response.data.contents);
+        setTotalPages(response.data.totalPages);
+      } else {
+        alert(response.errorMessage);
+      }
     })();
   }, []);
 
@@ -82,7 +88,7 @@ export default function IssueList() {
         pageLinkClassName={"number"}
         onPageChange={({ selected }) => setPage(selected + 1)}
         pageRangeDisplayed={5}
-        pageCount={10}
+        pageCount={totalPage}
         nextLabel=""
         previousLabel=""
       />
