@@ -1,7 +1,11 @@
-import React from "react";
+import Filter from "./components/filter/Filter";
 
 function App() {
-  return <div></div>;
+  return (
+    <>
+      <Filter />
+    </>
+  );
 }
 
 export default App;
