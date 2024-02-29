@@ -104,6 +104,7 @@ export default function IssueList() {
         breakLabel={false}
         marginPagesDisplayed={0}
         pageLinkClassName={"number"}
+        forcePage={page - 1}
         onPageChange={({ selected }) => setPage(selected + 1)}
         pageRangeDisplayed={5}
         pageCount={totalPage}
