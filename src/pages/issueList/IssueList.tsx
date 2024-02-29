@@ -1,30 +1,49 @@
 import Filter from "../../components/filter/Filter";
 import Sort from "../../components/sort/Sort";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import ReactPaginate from "react-paginate";
 import leftGrey from "assets/icons/chevronLeftGrey.png";
 import rightGrey from "assets/icons/chevronRightGrey.png";
 import { getIssue } from "../../apis/getIssue";
+import { useSearchParams } from "react-router-dom";
 
 export default function IssueList() {
-  const [filter, setFilter] = useState("all");
-  const [sort, setSort] = useState("created");
-  const [page, setPage] = useState(1);
+  const componentMounted = useRef(false);
+  const [filter, setFilter] = useState("");
+  const [sort, setSort] = useState("");
+  const [page, setPage] = useState(0);
   const [totalPage, setTotalPages] = useState(1);
   const [issues, setIssues] = useState<any>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    (async function () {
-      const response = await getIssue({});
-      if (response.isSuccess) {
-        setIssues(response.data.contents);
-        setTotalPages(response.data.totalPages);
-      } else {
-        alert(response.errorMessage);
-      }
-    })();
+    if (componentMounted.current) {
+      (async function () {
+        const params = { filter, sort, page };
+        const response = await getIssue(params);
+        if (response.isSuccess) {
+          setIssues(response.data.contents);
+          setTotalPages(response.data.totalPages);
+          setSearchParams({ state: filter, sort, page: String(page) });
+        } else {
+          alert(response.errorMessage);
+        }
+      })();
+    }
+  }, [filter, sort, page]);
+
+  useEffect(() => {
+    const filter = searchParams.get("state") ?? "all";
+    const sort = searchParams.get("sort") ?? "created";
+    const page = searchParams.get("page") ?? 1;
+
+    setFilter(filter);
+    setSort(sort);
+    setPage(Number(page));
+
+    componentMounted.current = true;
   }, []);
 
   return (

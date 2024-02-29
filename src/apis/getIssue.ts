@@ -2,7 +2,7 @@ import { request } from "./config/config";
 import { AxiosError } from "axios";
 
 interface IssueRequest {
-  state?: string;
+  filter?: string;
   sort?: string;
   page?: number;
   per_page?: number;
@@ -19,20 +19,26 @@ export async function getIssue({
 }: IssueRequest): Promise<WebResponse<IssueResponse>> {
   try {
     const response = await request.get("/repos/facebook/react/issues", {
-      params: { per_page: 10 },
+      params: {
+        per_page,
+        state: params.filter ? params.filter : undefined, // 이니셜 fetch 때 parameter 제외
+        sort: params.sort ? params.sort : undefined,
+        ...params,
+      },
     });
 
     // header에서 totalPages 추출
     const targetString = response.headers.link
       .split(",")
       .find((str: string) => str.includes("last"));
+
     const found = (targetString || "").match(/([?&])page=(?<page>\d+)/i);
 
     return {
       isSuccess: true,
       data: {
         contents: response.data,
-        totalPages: found?.groups.page ?? params.page,
+        totalPages: found?.groups.page ?? params.page, // 마지막 페이지인 경우 현재 페이지 반환
       },
     };
   } catch (e) {
@@ -44,7 +50,7 @@ export async function getIssue({
     }
     return {
       isSuccess: false,
-      errorMessage: "네트워크 요청에 실패했습니다.",
+      errorMessage: "다시 시도해주세요.",
     };
   }
 }
