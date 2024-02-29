@@ -46,7 +46,7 @@ export default function Filter({
     if (selected !== currentSelected) {
       setSelected(currentSelected);
     }
-  }, [currentSelected, selected]);
+  }, [currentSelected]);
 
   return (
     <>
