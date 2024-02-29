@@ -43,6 +43,11 @@ export default function Filter({
     return found?.overrideText ?? found?.text;
   }, [options, currentSelected]);
 
+  const isActive = useMemo(() => {
+    const found = options.find((option) => option.overrideText);
+    return label !== found?.overrideText;
+  }, [label, options]);
+
   useEffect(() => {
     if (selected !== currentSelected) {
       setSelected(currentSelected);
@@ -51,10 +56,7 @@ export default function Filter({
 
   return (
     <>
-      <FilterButton
-        isActive={label !== "이슈 상태"}
-        onClick={onChangeDialogHandler}
-      >
+      <FilterButton isActive={isActive} onClick={onChangeDialogHandler}>
         {label}
       </FilterButton>
       <Dialog isOpen={open} onClose={onChangeDialogHandler}>
