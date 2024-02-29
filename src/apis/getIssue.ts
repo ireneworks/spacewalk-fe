@@ -38,7 +38,7 @@ export async function getIssue({
       isSuccess: true,
       data: {
         contents: response.data,
-        totalPages: found?.groups.page ?? params.page, // 마지막 페이지인 경우 현재 페이지 반환
+        totalPages: Number(found?.groups.page) ?? params.page, // 마지막 페이지인 경우 현재 페이지 반환
       },
     };
   } catch (e) {

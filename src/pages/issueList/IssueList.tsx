@@ -103,7 +103,6 @@ export default function IssueList() {
       <Pagination
         breakLabel={false}
         marginPagesDisplayed={0}
-        forcePage={page - 1}
         pageLinkClassName={"number"}
         onPageChange={({ selected }) => setPage(selected + 1)}
         pageRangeDisplayed={5}
