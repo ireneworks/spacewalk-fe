@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import iconBlack from "assets/icons/chevronDownBlack.png";
 import iconBlue from "assets/icons/chevronDownBlue.png";
+import Button from "components/button/Button";
 
 interface Option {
   value: string;
@@ -68,7 +69,7 @@ export default function Filter({
               </li>
             ))}
           </ul>
-          <SubmitButton onClick={onSubmitHandler}>적용</SubmitButton>
+          <Button onClick={onSubmitHandler}>적용</Button>
         </ContentWrapper>
       </Dialog>
     </>
@@ -118,17 +119,5 @@ const OptionButton = styled.button<{ isActive: boolean }>`
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
-  cursor: pointer;
-`;
-
-const SubmitButton = styled.button`
-  background: #1a8cff;
-  color: #fff;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-  width: 100%;
-  padding: 12px 16px;
-  border-radius: 8px;
   cursor: pointer;
 `;
