@@ -22,4 +22,4 @@ $ npm start
 - react-router-dom
 - dayjs
 - react-paginate
-- - styled-component
+- styled-component
