@@ -1,20 +1,20 @@
 # Spacewalk Frontend Test
 
-### 실행 방법
+### Get Started
 
-1. 의존성 설치하기
+1. Installation
 
 ```
 $ npm install 
 ```
 
-2. 프로젝트 시작하기
+2. Starting the Project
 
 ```
 $ npm start 
 ```
 
-### 사용 라이브러리
+### Dependencies
 
 - react
 - typescript
