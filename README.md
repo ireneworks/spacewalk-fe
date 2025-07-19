@@ -14,7 +14,7 @@ $ npm install
 $ npm start 
 ```
 
-### Dependencies
+### Packages
 
 - react
 - typescript
